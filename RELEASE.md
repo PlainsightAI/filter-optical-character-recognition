@@ -5,6 +5,11 @@ Optical character recognition filter release notes
 
 ## v0.1.0 - 2025-05-22
 
+### Changed
+- Update dependencies
+
+## v0.1.0 - 2025-05-22
+
 ### Added
 - Initial release of OCR filter to extract text from image frames using OCR engines.
 - Dual OCR Engine Support:
