@@ -3,6 +3,12 @@ Optical character recognition filter release notes
 
 ## [Unreleased]
 
+## v0.1.4 - 2025-08-06
+
+### Modified
+- Support for model info 
+- Updated dependencies
+
 ## v0.1.3 - 2025-07-30
 
 ### Added
