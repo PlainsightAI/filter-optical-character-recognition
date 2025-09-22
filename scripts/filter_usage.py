@@ -32,7 +32,7 @@ def main():
     parser.add_argument(
         "--input",
         default=os.path.join(
-            os.path.dirname(os.path.dirname(__file__)), "data", "sample-video.mp4"
+            os.path.dirname(os.path.dirname(__file__)), "video_example.mp4"
         ),
         help="Input video file path",
     )
@@ -67,6 +67,14 @@ def main():
         f"file://{os.path.join(args.output_dir, 'main_output.mp4')}!fps={args.fps}"
     )
 
+    # Print configuration summary
+    print("OCR Demo Pipeline")
+    print(f"Input: {args.input}")
+    print(f"Output dir: {args.output_dir}")
+    print(f"OCR engine: {args.ocr_engine}")
+    print(f"OCR JSON path: {ocr_json_path}")
+    print(f"Topic regex: {args.ocr_topic_pattern}")
+
     Filter.run_multi(
         [
             # Input video source
@@ -91,7 +99,7 @@ def main():
                     padding=20,
                 ),
             ),
-            # OCR filter - processes selected topics
+            # OCR filter - processes selected topics and forwards non-image data when enabled
             (
                 FilterOpticalCharacterRecognition,
                 FilterOpticalCharacterRecognitionConfig(
@@ -100,12 +108,11 @@ def main():
                     outputs="tcp://127.0.0.1:6014",
                     mq_log="pretty",
                     ocr_engine=args.ocr_engine,
-                    # output_json_path=ocr_json_path,
-                    # topic_pattern=args.ocr_topic_pattern,
-                    # forward_ocr_texts=True,
-                    # write_output_file=True,
-                    exclude_topics=["main"],  # ["region_*"] in regex format
-                    # debug=True
+                    topic_pattern=args.ocr_topic_pattern,
+                    forward_ocr_texts=True,
+                    write_output_file=True,
+                    forward_upstream_data=True,
+                    exclude_topics=["main"],
                 ),
             ),
             # Web visualization for all streams

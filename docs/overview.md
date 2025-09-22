@@ -21,15 +21,18 @@ The `FilterOpticalCharacterRecognition` is a pluggable filter that extracts text
 - **Multi-language OCR**  
   Use the `ocr_language` option to specify one or more language codes (e.g., `en,fr`).
 
-- **Topic-based Processing**  
+- **Multi-topic Processing**  
+  - Process multiple video regions simultaneously using pub/sub topics
   - Filter frames by topic using `topic_pattern` regex
   - Exclude specific topics using `exclude_topics` list
   - Support for exact topic names or regex patterns in exclusions
+  - **Main-first output ordering** - ensures consistent topic structure
 
 - **Flexible Output Options**  
   - Write results to JSON file (configurable via `write_output_file`)
   - Forward OCR results in frame metadata (configurable via `forward_ocr_texts`)
   - Results are written to `output_json_path` as newline-delimited JSON
+  - **Data forwarding** - forwards non-image frames when `forward_upstream_data` is enabled
 
 - **Debug Mode**  
   Enabling `debug: true` will increase logging verbosity for troubleshooting and transparency.
@@ -93,6 +96,7 @@ This filter is ideal for any pipeline that requires reading printed or handwritt
 | `write_output_file` | `boolean` | `false`                                    | Whether to write results to output file |
 | `topic_pattern`  | `string`   | `null`                                         | Regex pattern to match topic names |
 | `exclude_topics` | `string[]` | `[]`                                           | List of topics to exclude from OCR processing |
+| `forward_upstream_data` | `boolean` | `true`                                  | Whether to forward non-image frames through the pipeline |
 
 ## Environment Variables
 
@@ -103,6 +107,7 @@ All configuration options can be overridden using environment variables with the
 - `FILTER_DEBUG`
 - `FILTER_TOPIC_PATTERN`
 - `FILTER_EXCLUDE_TOPICS`
+- `FILTER_FORWARD_UPSTREAM_DATA`
 
 Boolean values should be set to "true" or "false" (case-insensitive).
 List values should be comma-separated strings.

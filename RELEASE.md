@@ -3,6 +3,28 @@ Optical character recognition filter release notes
 
 ## [Unreleased]
 
+## v0.1.6 - 2025-09-22
+
+### Added
+- **Multi-topic processing** - Process multiple video regions simultaneously using pub/sub topics
+- **Data forwarding** - New `forward_upstream_data` configuration to forward non-image frames
+- **Main-first ordering** - Ensures consistent output structure with 'main' topic first
+- **Enhanced configuration normalization** - Robust string-to-type coercion and validation
+- **Comprehensive test suite** - Added `test_smoke_simple.py` and `test_integration_config_normalization.py`
+- **Environment variable support** - `FILTER_FORWARD_UPSTREAM_DATA` for data forwarding control
+
+### Changed
+- **Improved `process()` method** - Complete rewrite to handle multi-topic processing
+- **Enhanced `OCREngine.from_str()`** - Better handling of various input formats
+- **Updated `normalize_config()`** - Comprehensive configuration validation and type coercion
+- **Updated documentation** - README.md and docs/overview.md reflect new multi-topic capabilities
+- **Updated usage script** - `scripts/filter_usage.py` now demonstrates multi-topic processing
+
+### Technical Improvements
+- **Performance optimization** - Efficient processing of multiple topics in single pass
+- **Error handling** - Robust validation and graceful error handling
+- **Code consistency** - Follows established patterns from other Plainsight filters
+
 ## v0.1.5 - 2025-08-12
 
 ### Modified

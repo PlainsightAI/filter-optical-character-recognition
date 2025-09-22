@@ -49,8 +49,16 @@ class OCREngine(Enum):
         Raises:
             ValueError: If the string doesn't match any enum value
         """
+        # Already an enum instance
+        if isinstance(value, OCREngine):
+            return value
+
+        # Normalize text like "OCREngine.EASYOCR" or "ocrengine.easyocr" → "easyocr"
+        text = str(value).strip().lower()
+        if "." in text:
+            text = text.split(".")[-1]
         try:
-            return cls(value.strip().lower())
+            return cls(text)
         except ValueError:
             raise ValueError(
                 f"Invalid mode: {value!r}. Expected one of: {[s.value for s in cls]}"
@@ -106,6 +114,8 @@ class FilterOpticalCharacterRecognitionConfig(FilterConfig):
     optimize_params: Optional[bool] = True
     # Video chunks directory
     video_chunks_dir: Optional[str] = "/output/"
+    # Forward non-image upstream data frames as-is
+    forward_upstream_data: Optional[bool] = True
 
 
 class FilterOpticalCharacterRecognition(Filter):
@@ -146,9 +156,46 @@ class FilterOpticalCharacterRecognition(Filter):
             ValueError: If configuration values are invalid
             TypeError: If configuration values have incorrect types
         """
-        config = FilterOpticalCharacterRecognitionConfig(
-            super().normalize_config(config)
-        )
+        # First, let the base class do its normalization
+        base_normalized = super().normalize_config(config)
+
+        # If a raw dict was provided, coerce string values to proper types
+        if isinstance(base_normalized, dict):
+            direct_mapping = {
+                "debug": (bool, lambda x: str(x).strip().lower() == "true"),
+                "ocr_engine": (str, lambda x: str(x).strip()),
+                "output_json_path": (str, lambda x: str(x).strip()),
+                "ocr_language": (list, lambda x: [lang.strip() for lang in str(x).split(",")] if isinstance(x, str) else x),
+                "tesseract_cmd": (str, lambda x: str(x).strip()),
+                "forward_ocr_texts": (bool, lambda x: str(x).strip().lower() == "true"),
+                "write_output_file": (bool, lambda x: str(x).strip().lower() == "true"),
+                "topic_pattern": (str, lambda x: str(x).strip()),
+                "exclude_topics": (list, lambda x: json.loads(x) if isinstance(x, str) and x.strip().startswith("[") else ([t.strip() for t in str(x).split(",")] if isinstance(x, str) else x)),
+                "draw_visualization": (bool, lambda x: str(x).strip().lower() == "true"),
+                "visualization_topic": (str, lambda x: str(x).strip()),
+                "visualization_resize_factor": (float, lambda x: float(str(x).strip())),
+                "text_scale_factor": (float, lambda x: float(str(x).strip())),
+                "frame_skip": (int, lambda x: int(str(x).strip())),
+                "confidence_threshold": (float, lambda x: float(str(x).strip())),
+                "gpu": (bool, lambda x: str(x).strip().lower() == "true"),
+                "optimize_params": (bool, lambda x: str(x).strip().lower() == "true"),
+                "video_chunks_dir": (str, lambda x: str(x).strip()),
+                "forward_upstream_data": (bool, lambda x: str(x).strip().lower() == "true"),
+            }
+
+            for key, (expected_type, converter) in direct_mapping.items():
+                if key in base_normalized and base_normalized[key] is not None:
+                    val = base_normalized[key]
+                    # Only convert if it's a string or mismatched type
+                    if isinstance(val, str) or not isinstance(val, expected_type):
+                        try:
+                            base_normalized[key] = converter(val)
+                        except Exception:
+                            # Keep original; validation below will raise a clear error
+                            pass
+
+        # Now construct the config object
+        config = FilterOpticalCharacterRecognitionConfig(base_normalized)
 
         # Environment variable mapping with type information
         env_mapping = {
@@ -175,6 +222,7 @@ class FilterOpticalCharacterRecognition(Filter):
             "gpu": (bool, lambda x: x.strip().lower() == "true"),
             "optimize_params": (bool, lambda x: x.strip().lower() == "true"),
             "video_chunks_dir": (str, str.strip),
+            "forward_upstream_data": (bool, lambda x: x.strip().lower() == "true"),
         }
 
         # Process environment variables
@@ -234,7 +282,7 @@ class FilterOpticalCharacterRecognition(Filter):
             )
 
         # Validate boolean flags
-        for flag in ["forward_ocr_texts", "write_output_file"]:
+        for flag in ["forward_ocr_texts", "write_output_file", "forward_upstream_data"]:
             if not isinstance(getattr(config, flag), bool):
                 raise TypeError(f"{flag} must be a boolean")
 
@@ -320,6 +368,9 @@ class FilterOpticalCharacterRecognition(Filter):
             ValueError: If configuration is invalid
             Exception: If output file cannot be opened
         """
+        # Normalize incoming config to ensure enums/booleans are correct
+        config = self.normalize_config(config)
+
         logger.info("===========================================")
         logger.info(f"FilterOpticalCharacterRecognition setup: {config}")
         logger.info("===========================================")
@@ -349,6 +400,8 @@ class FilterOpticalCharacterRecognition(Filter):
         self.ocr_cache = {}
         # Video chunks directory
         self.video_chunks_dir = config.video_chunks_dir
+        # Upstream forwarding behavior
+        self.forward_upstream_data = config.forward_upstream_data
 
         if self.topic_pattern:
             try:
@@ -459,6 +512,9 @@ class FilterOpticalCharacterRecognition(Filter):
             ocr_results = self.ocr_cache
         else:
             for topic, frame in frames.items():
+                # Skip non-image frames for OCR, may be forwarded later
+                if not getattr(frame, 'has_image', False):
+                    continue
                 # Check if topic should be excluded (either exact match or regex pattern)
                 should_exclude = False
                 for pattern in self.exclude_topics:
@@ -587,6 +643,11 @@ class FilterOpticalCharacterRecognition(Filter):
         output_frames = {}
 
         for topic, frame in frames.items():
+            # Forward non-image frames as-is if enabled
+            if not getattr(frame, 'has_image', False):
+                if self.forward_upstream_data:
+                    output_frames[topic] = frame
+                continue
             # Start with original metadata
             meta = dict(frame.data.get("meta", {}))
 
@@ -611,6 +672,11 @@ class FilterOpticalCharacterRecognition(Filter):
             texts = ocr_results.get("main", []) if self.forward_ocr_texts else []
             vis_image = self.draw_text_visualization(main_frame.rw_bgr.image, texts)
             output_frames[self.visualization_topic] = Frame(vis_image, {}, "BGR")
+
+        # Ensure main topic comes first in the output dictionary
+        if 'main' in output_frames:
+            main_frame = output_frames.pop('main')
+            return {'main': main_frame, **output_frames}
 
         return output_frames
 
