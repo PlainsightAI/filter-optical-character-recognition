@@ -669,7 +669,7 @@ class FilterOpticalCharacterRecognition(Filter):
         # Add visualization frame if enabled
         if self.draw_visualization:
             main_frame = frames["main"]
-            texts = ocr_results.get("main", []) if self.forward_ocr_texts else []
+            texts = ocr_results.get("main", {}).get("texts", []) if self.forward_ocr_texts else []
             vis_image = self.draw_text_visualization(main_frame.rw_bgr.image, texts)
             output_frames[self.visualization_topic] = Frame(vis_image, {}, "BGR")
 
