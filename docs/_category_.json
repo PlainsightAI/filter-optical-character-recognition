@@ -1,9 +1,9 @@
 {
-    "label": "OCR Filter",
+    "label": "TextScan",
     "link": {
       "type": "generated-index",
-      "title":"Optical Character Recognition Filter",
-      "description": "Documentation for Optical Character Recognition Filter.",
+      "title":"TextScan",
+      "description": "Documentation for TextScan.",
       "slug": "/filter-ocr"
     }
   }

@@ -1,6 +1,6 @@
-# Contributing to the OCR Filter
+# Contributing to TextScan
 
-Thanks for your interest in improving the **OCR Filter**, a configurable optical character recognition component built on top of OpenFilter! 🕵️
+Thanks for your interest in improving **TextScan**, a configurable optical character recognition component built on top of OpenFilter! 🕵️
 Whether you're fixing bugs, optimizing performance, adding support for new OCR models, or improving documentation, your help makes a difference.
 
 This guide will help you:
@@ -16,7 +16,7 @@ This guide will help you:
 
 ## Topics
 
-* [Contributing to the OCR Filter](#contributing-to-the-ocr-filter)
+* [Contributing to TextScan](#contributing-to-textscan)
 
   * [Setting up your development environment](#setting-up-your-development-environment)
   * [Running tests](#running-tests)
@@ -266,7 +266,7 @@ gitGraph
 
 ## Thank you 🙏
 
-Thanks for helping improve the OCR Filter! Contributions, feedback, and ideas are always welcome.
+Thanks for helping improve TextScan! Contributions, feedback, and ideas are always welcome.
 
 Whether you're contributing a bug fix, a test case, a feature, or just reviewing a PR — we appreciate you.
 

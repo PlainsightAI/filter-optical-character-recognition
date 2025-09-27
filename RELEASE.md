@@ -1,7 +1,12 @@
 # Changelog
-Optical character recognition filter release notes
+TextScan release notes
 
 ## [Unreleased]
+
+## v0.1.7 - 2025-09-27
+
+### Changed
+- Updated documentation.
 
 ## v0.1.6 - 2025-09-22
 
@@ -61,7 +66,7 @@ Optical character recognition filter release notes
 ## v0.1.0 - 2025-05-22
 
 ### Added
-- Initial release of OCR filter to extract text from image frames using OCR engines.
+- Initial release of TextScan to extract text from image frames using OCR engines.
 - Dual OCR Engine Support:
   - Supports both `tesseract` and `easyocr`
   - Selectable via the `ocr_engine` config field
