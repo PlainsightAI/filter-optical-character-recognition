@@ -17,6 +17,9 @@ It supports frame-by-frame OCR, optional skipping via metadata, and flexible dep
 * ⚙️ Configurable via CLI args, code, or environment variables
 * 🧩 Plug-and-play compatibility with [OpenFilter](https://github.com/PlainsightAI/openfilter)
 * 📤 Outputs recognized text, ocr confidence score and bounding boxes as metadata
+* 🔄 **Multi-topic processing** - processes multiple video regions simultaneously
+* 🔀 **Data forwarding** - forwards non-image frames when enabled
+* 📊 **Main-first ordering** - ensures consistent output structure
 
 ---
 
@@ -64,15 +67,16 @@ openfilter run \
     --mq_log pretty
   - Webvis
 
-# Annotation enabled, overlaying detected text out output
+# Multi-topic processing with region-based OCR
 openfilter run \
   - VideoIn --sources 'file://video_example.mp4!loop' \
   - filter_optical_character_recognition.filter.FilterOpticalCharacterRecognition \
       --ocr_engine easyocr \
       --forward_ocr_texts true \
       --draw_visualization true \
-      --visualization_topic "main" \
-      --topic_pattern "main" \
+      --topic_pattern "region_.*" \
+      --exclude_topics "main" \
+      --forward_upstream_data true \
   - Webvis
 ```
 
@@ -146,6 +150,9 @@ Tests cover:
 * `skip_ocr` handling
 * Frame metadata propagation
 * Integration in multi-filter pipelines
+* **Multi-topic processing and main-first ordering**
+* **Configuration normalization and validation**
+* **Data forwarding behavior**
 
 ---
 
