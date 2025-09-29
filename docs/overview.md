@@ -1,12 +1,12 @@
 ---
-title: OCR Filter
+title: TextScan
 sidebar_label: Overview
 sidebar_position: 1
 ---
 
 import Admonition from '@theme/Admonition';
 
-# Optical Character Recognition (OCR) Filter
+# TextScan
 
 The `FilterOpticalCharacterRecognition` is a pluggable filter that extracts text from image frames using Optical Character Recognition (OCR). It supports multiple OCR backends and offers flexible configuration for language support, output, and debug logging.
 

@@ -1,6 +1,6 @@
-# 🔤 Optical Character Recognition (OCR) Filter
+# 🔤 TextScan
 
-**OCR Filter** is a modular [OpenFilter](https://github.com/PlainsightAI/openfilter)-based filter for extracting text from video frames using EasyOCR or Tesseract.
+**TextScan** is a modular [OpenFilter](https://github.com/PlainsightAI/openfilter)-based filter for extracting text from video frames using EasyOCR or Tesseract.
 
 It supports frame-by-frame OCR, optional skipping via metadata, and flexible deployment as part of OpenFilter pipelines.
 
@@ -206,5 +206,5 @@ Licensed under the [Apache 2.0 License](https://github.com/PlainsightAI/filter-o
 
 ## 🙏 Acknowledgements
 
-Thanks for using the OCR Filter!
+Thanks for using TextScan!
 For questions or feature requests, [open a GitHub issue](https://github.com/PlainsightAI/filter-optical-character-recognition/issues/new/choose).
