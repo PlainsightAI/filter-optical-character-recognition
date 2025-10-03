@@ -5,6 +5,7 @@
 It supports frame-by-frame OCR, optional skipping via metadata, and flexible deployment as part of OpenFilter pipelines.
 
 [![PyPI version](https://img.shields.io/pypi/v/filter-optical-character-recognition.svg?style=flat-square)](https://pypi.org/project/filter-optical-character-recognition/)
+[![Docker Version](https://img.shields.io/docker/v/plainsightai/openfilter-optical-character-recognition?sort=semver)](https://hub.docker.com/r/plainsightai/openfilter-optical-character-recognition)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/PlainsightAI/filter-optical-character-recognition/blob/main/LICENSE)
 ![Build Status](https://github.com/PlainsightAI/filter-optical-character-recognition/actions/workflows/ci.yaml/badge.svg)
 
