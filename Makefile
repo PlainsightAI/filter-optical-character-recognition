@@ -2,6 +2,8 @@
 # Repo-specific variables
 # ---------------------------------
 
+IMAGE ?= plainsightai/openfilter-optical-character-recognition
+
 VERSION ?= $(shell cat VERSION)
 
 # For convenience, define these if you need them in other places in your pipeline

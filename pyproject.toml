@@ -25,7 +25,7 @@ classifiers = [
 dynamic = ["version"]
 
 dependencies = [
-  "openfilter[all]>=0.1.0,<0.2.0",
+  "openfilter[all]>=0.1.27,<0.2.0",
   "pytesseract==0.3.13",
   "easyocr==1.7.2",
   "python-dotenv"
@@ -33,7 +33,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  "build==1.2.1",
+  "build>=1.2.2",
   "setuptools==72.2.0",
   "twine>=6.1.0,<7",
   "wheel==0.44.0",
