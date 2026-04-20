@@ -3,6 +3,15 @@ TextScan release notes
 
 ## [Unreleased]
 
+## v0.1.8 - 2026-04-17
+
+### Changed
+- Add CI/CD workflows: create-release.yaml (Docker Hub publishing), ci.yaml (PR testing), security-scan.yaml
+- Bump openfilter dependency to >=0.1.27
+- Add Makefile IMAGE for Docker Hub
+- Loosen build dependency to >=1.2.2
+
+
 ## v0.1.7 - 2025-09-27
 
 ### Changed

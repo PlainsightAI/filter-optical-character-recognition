@@ -2,29 +2,25 @@ name: CI
 
 on:
   push:
-    branches: [main, release]
+    branches: [main]
   pull_request:
-    branches: [main, release]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  run-unit-tests:
-    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ["3.10", "3.11", "3.12"]
+        python: ["3.10", "3.11", "3.12", "3.13"]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
-
-      - name: Install project and dependencies
-        run: make install
-
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          make install
       - name: Run tests
         run: make test
