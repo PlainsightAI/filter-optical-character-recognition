@@ -3,6 +3,13 @@ TextScan release notes
 
 ## [Unreleased]
 
+## v0.1.9 - 2026-04-20
+
+### Changed
+- Remove redundant ci.yaml (shared workflow handles PR testing)
+- Add push + pull_request triggers to create-release.yaml
+
+
 ## v0.1.8 - 2026-04-17
 
 ### Changed
