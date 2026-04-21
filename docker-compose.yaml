@@ -1,28 +1,28 @@
 services:
   video_in:
-    image: containers.openfilter.io/plainsightai/openfilter-video-in:0.1.27
+    image: containers.openfilter.io/plainsightai/openfilter-video-inopenfilter-optical-character-recognition:0.1.9
     environment:
-      LOG_LEVEL: ${LOG_LEVEL:-}
+      LOG_LEVEL: ${LOG_LEVELopenfilter-optical-character-recognition:0.1.9}
       FILTER_ID: VideoIn
       FILTER_SOURCES: file:///video.mp4!sync!loop
       FILTER_OUTPUTS: tcp://*
     volumes:
-      - ./data/sample-video.mp4:/video.mp4:ro
+      - ./data/sample-video.mp4:/video.mp4openfilter-optical-character-recognition:0.1.9
 
   optical_character_recognition_filter:
-    image: containers.openfilter.io/plainsightai/openfilter-optical-character-recognition:v0.1.5
+    image: containers.openfilter.io/plainsightai/openfilter-optical-character-recognition:0.1.9
     environment:
-      LOG_LEVEL: ${LOG_LEVEL:-}
+      LOG_LEVEL: ${LOG_LEVELopenfilter-optical-character-recognition:0.1.9}
       FILTER_ID: OCRFilter
       FILTER_SOURCES: tcp://video_in
       FILTER_OUTPUTS: tcp://*
       FILTER_MQ_LOG: pretty
 
   webvis:
-    image: containers.openfilter.io/plainsightai/openfilter-webvis:0.1.27
+    image: containers.openfilter.io/plainsightai/openfilter-webvisopenfilter-optical-character-recognition:0.1.9
     environment:
-      LOG_LEVEL: ${LOG_LEVEL:-}
+      LOG_LEVEL: ${LOG_LEVELopenfilter-optical-character-recognition:0.1.9}
       FILTER_ID: Webvis
       FILTER_SOURCES: tcp://optical_character_recognition_filter
     ports:
-      - 8001:8000
+      - 8001openfilter-optical-character-recognition:0.1.9
