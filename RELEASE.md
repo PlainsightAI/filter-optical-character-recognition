@@ -1,8 +1,8 @@
-# v0.1.10
-
 # Changelog
 TextScan release notes
 
+
+## [Unreleased]
 
 ## v0.1.10 - 2026-04-23
 
@@ -11,12 +11,6 @@ TextScan release notes
 
 - Fix release workflow secret names: `PYPI_API_TOKEN` → `PLAINSIGHT_PYPI_TOKEN`, `DOCKERHUB_TOKEN` → `DOCKERHUB_ACCESS_TOKEN` (org-level secret names). Without this the PyPI / Docker Hub tokens resolved to empty and no package has been published since the migration.
 - Bump openfilter dependency to `>=0.1.30`.
-
-## [Unreleased]
-
-## v0.1.9 - 2026-04-20
-
-### Changed
 - Remove redundant ci.yaml (shared workflow handles PR testing)
 - Add push + pull_request triggers to create-release.yaml
 
