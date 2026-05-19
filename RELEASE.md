@@ -4,6 +4,10 @@ TextScan release notes
 
 ## [Unreleased]
 
+### Changed
+
+- Bump openfilter to 1.0.0
+
 ## v0.1.10 - 2026-04-23
 
 ### Changed
