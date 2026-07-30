@@ -4,11 +4,11 @@ TextScan release notes
 
 ## [Unreleased]
 
+## v0.1.11 - 2026-07-30
+
 ### Changed
 
-- Bump openfilter to 1.1.1
-- Bump openfilter to 1.1.2
-- Bump the openfilter dependency to 1.2.0
+- Update the openfilter dependency to `>=1.2.0,<2.0.0` (openfilter 1.2.0 moves to OpenCV 5).
 
 ## v0.1.10 - 2026-04-23
 
