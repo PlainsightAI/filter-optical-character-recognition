@@ -10,7 +10,7 @@ TextScan release notes
 - Update `openfilter[all]` to `>=1.2.1`.
 - Grant `id-token: write` in `create-release.yaml` so the public release workflow can produce a keyless (cosign) SBOM attestation for the published image (once the shared SBOM steps land).
 - Pin the Docker base to `python:3.11.12-slim` (was `python:3.11-slim`).
-- Point the compose utility images at `containers.openfilter.io/plainsightai/openfilter-{video-in,webvis}:1.2.1`.
+- Point the compose utility images at `containers.openfilter.io/plainsightai/openfilter-{video-in,webvis}:1.2.1`, and pin the filter's own `docker-compose.yaml` image to the release version (`openfilter-optical-character-recognition:0.1.12`).
 - Update dev-tooling floors (`setuptools>=83.0.0`) and switch dev pins to range pins.
 
 ## v0.1.11 - 2026-07-30
