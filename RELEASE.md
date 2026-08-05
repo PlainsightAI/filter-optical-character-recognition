@@ -4,9 +4,14 @@ TextScan release notes
 
 ## [Unreleased]
 
-### Changed
+## v0.1.12 - 2026-08-04
 
-- Bump the openfilter dependency to 1.2.1
+### Changed
+- Update `openfilter[all]` to `>=1.2.1`.
+- Grant `id-token: write` in `create-release.yaml` so the public release workflow can produce a keyless (cosign) SBOM attestation for the published image (once the shared SBOM steps land).
+- Pin the Docker base to `python:3.11.12-slim` (was `python:3.11-slim`).
+- Point the compose utility images at `containers.openfilter.io/plainsightai/openfilter-{video-in,webvis}:1.2.1`, and pin the filter's own `docker-compose.yaml` image to the release version (`openfilter-optical-character-recognition:0.1.12`).
+- Update dev-tooling floors (`setuptools>=83.0.0`) and switch dev pins to range pins.
 
 ## v0.1.11 - 2026-07-30
 
@@ -17,10 +22,8 @@ TextScan release notes
 ## v0.1.10 - 2026-04-23
 
 ### Changed
-- Bump openfilter SDK, align CI workflow with shared release gate (source-paths)
-
+- Update the openfilter dependency to `>=0.1.30`, and align the CI workflow with the shared release gate (source-paths).
 - Fix release workflow secret names: `PYPI_API_TOKEN` → `PLAINSIGHT_PYPI_TOKEN`, `DOCKERHUB_TOKEN` → `DOCKERHUB_ACCESS_TOKEN` (org-level secret names). Without this the PyPI / Docker Hub tokens resolved to empty and no package has been published since the migration.
-- Bump openfilter dependency to `>=0.1.30`.
 - Remove redundant ci.yaml (shared workflow handles PR testing)
 - Add push + pull_request triggers to create-release.yaml
 
@@ -29,7 +32,7 @@ TextScan release notes
 
 ### Changed
 - Add CI/CD workflows: create-release.yaml (Docker Hub publishing), ci.yaml (PR testing), security-scan.yaml
-- Bump openfilter dependency to >=0.1.27
+- Update openfilter dependency to >=0.1.27
 - Add Makefile IMAGE for Docker Hub
 - Loosen build dependency to >=1.2.2
 
