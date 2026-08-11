@@ -1,12 +1,14 @@
 # Changelog
 TextScan release notes
 
-
 ## [Unreleased]
+
+## v0.1.13 - 2026-08-10
 
 ### Changed
 
-- Bump the openfilter dependency to 1.2.2
+- Build the image on `openfilter-base` (weekly apt-upgraded python-slim) instead of a stale `python:X.Y.Z-slim` pin, clearing the OS-package CVEs the pin carried.
+- Update the openfilter dependency to 1.2.2
 
 ## v0.1.12 - 2026-08-04
 
@@ -31,7 +33,6 @@ TextScan release notes
 - Remove redundant ci.yaml (shared workflow handles PR testing)
 - Add push + pull_request triggers to create-release.yaml
 
-
 ## v0.1.8 - 2026-04-17
 
 ### Changed
@@ -39,7 +40,6 @@ TextScan release notes
 - Update openfilter dependency to >=0.1.27
 - Add Makefile IMAGE for Docker Hub
 - Loosen build dependency to >=1.2.2
-
 
 ## v0.1.7 - 2025-09-27
 
