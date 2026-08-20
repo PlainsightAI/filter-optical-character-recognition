@@ -3,9 +3,12 @@ TextScan release notes
 
 ## [Unreleased]
 
+## v0.1.14 - 2026-08-18
+
 ### Changed
 
-- Bump the openfilter dependency to 1.3.0
+- Update the openfilter dependency to 1.3.0
+- Add Python 3.14 support: raise the `requires-python` ceiling to `<3.15`; the CI test matrix now runs 3.10–3.14.
 
 ## v0.1.13 - 2026-08-10
 
