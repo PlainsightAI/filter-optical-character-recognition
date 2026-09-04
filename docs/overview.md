@@ -2,6 +2,7 @@
 title: TextScan
 sidebar_label: Overview
 sidebar_position: 1
+slug: /filters/textscan/overview
 ---
 
 import Admonition from '@theme/Admonition';
