@@ -3,6 +3,8 @@ TextScan release notes
 
 ## [Unreleased]
 
+## v0.2.0 - 2026-11-24
+
 ### Changed
 
 - Bump the openfilter dependency to 1.5.0
